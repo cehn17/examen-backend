@@ -12,8 +12,10 @@ import javax.persistence.Id;
 import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.validation.constraints.Email;
+import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
+import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="users")
@@ -28,11 +30,14 @@ public class User implements Serializable{
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	private Long id;
 	
-	@Email(message = "El email no es valido")
+	@Email(message = "No es un formato valido")
+	@NotBlank(message = "No puede estar en blanco")
 	private String email;
 	
+	@NotBlank(message = "No puede estar en blanco")
 	private String firstName;
 	
+	@NotBlank(message = "No puede estar en blanco")
 	private String lastName;
 	
 	@JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
