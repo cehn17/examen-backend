@@ -102,7 +102,7 @@ class UserRestControllerTest {
 				.andExpect(status().isBadRequest());
 	}
 	
-	@DisplayName("Test Create user - BadRequest")
+	@DisplayName("Test Find User by ID - NOT_FOUND")
 	@Test
     void TestFindUserByIdNotFound() throws Exception {
         Long userId = 1L;
