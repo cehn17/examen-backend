@@ -15,7 +15,6 @@ import javax.validation.constraints.Email;
 import javax.validation.constraints.NotBlank;
 
 import com.fasterxml.jackson.annotation.JsonIgnoreProperties;
-import com.sun.istack.NotNull;
 
 @Entity
 @Table(name="users")
@@ -43,6 +42,18 @@ public class User implements Serializable{
 	@JsonIgnoreProperties({"user","hibernateLazyInitializer", "handler"})
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Loan> loans;
+	
+	
+
+	public User(Long id,
+			@Email(message = "No es un formato valido") @NotBlank(message = "No puede estar en blanco") String email,
+			@NotBlank(message = "No puede estar en blanco") String firstName,
+			@NotBlank(message = "No puede estar en blanco") String lastName) {
+		this.id = id;
+		this.email = email;
+		this.firstName = firstName;
+		this.lastName = lastName;
+	}
 
 	public Long getId() {
 		return id;
