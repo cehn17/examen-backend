@@ -39,8 +39,7 @@ public class UserRestController {
 	@GetMapping("/users")
 	public ResponseEntity<?> findAll(){
 		logger.info("INFO - Buscando la lista de Users en la BBDD");
-		logger.warn("WARN - Level Log Message");//Print a WARN Logger Msg
-        logger.error("ERROR - Level Log Message");//Print a ERROR Logger Msg
+		
 		List<User> users = this.userService.findAll();
 		
 		return new ResponseEntity<>(users, HttpStatus.OK);
