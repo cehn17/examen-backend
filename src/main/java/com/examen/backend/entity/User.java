@@ -43,7 +43,7 @@ public class User implements Serializable{
 	@OneToMany(fetch = FetchType.LAZY, mappedBy = "user", cascade = CascadeType.ALL)
 	private List<Loan> loans;
 	
-	
+	public User() {}
 
 	public User(Long id,
 			@Email(message = "No es un formato valido") @NotBlank(message = "No puede estar en blanco") String email,

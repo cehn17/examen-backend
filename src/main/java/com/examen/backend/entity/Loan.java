@@ -32,7 +32,7 @@ public class Loan implements Serializable{
 	@ManyToOne(fetch = FetchType.LAZY)
 	private User user;
 	
-	
+	public Loan() {}
 
 	public Loan(Long id, Double total, User user) {
 		this.id = id;

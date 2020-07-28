@@ -65,7 +65,7 @@ public class LoanRestController {
 		
 		Map<String, Object> response = new HashMap<>();
 		
-		if(page < 0 || size < 0) {
+		if(page < 0 || size < 0 || user_id < 0) {
 			logger.error("Error - los parametros ingresados no pueden ser menor a 0");
 			response.put("mensaje", "Error - los parametros ingresados no pueden ser menor a 0");
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); 
