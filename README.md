@@ -1,7 +1,7 @@
 # examen-backend
 
 - Para levantar la aplicación uno de los ide que se puede usar es eclipse Spring Tools Suite 4,
-El cual pueden descargar de la siguiente pagina: https://spring.io/tools
+El cual pueden descargar de la siguiente página: https://spring.io/tools
 o se puede agregar el plugin para eclipse Spring Tools Suite 4 en MarcketPlace.
 
 - Una vez que esta el eclipse abierto hacer import del proyecto,
@@ -17,7 +17,7 @@ y comenzara a la levantar la aplicación
 - Una vez levantada la aplicación se habran creado las tablas de la base de datos, en el archivo import.sql
 se encuentra un juego de datos el cual utilice para las pruebas, puede esos datos si desea.
 
-- Una vez levantada la aplicación ya puede realizar pruebas con postman.
+- Una vez levantada la aplicación y cargado los datos en la base de datos ya puede realizar pruebas con postman.
 
 - ACLARACIÓN IMPORTANTE: Spring boot no soporta este tipo de rutas: "/loans?page={page}&size={size}&user_id={user_id}" ,
 las rutas deben tener la siguiente estructura: "/loans/{page}/{size}/{user_id}"
