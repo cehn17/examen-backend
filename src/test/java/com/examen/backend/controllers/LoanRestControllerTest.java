@@ -1,9 +1,7 @@
 package com.examen.backend.controllers;
 
-import static org.hamcrest.CoreMatchers.is;
 import static org.mockito.Mockito.when;
 import static org.springframework.test.web.servlet.request.MockMvcRequestBuilders.get;
-import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.jsonPath;
 import static org.springframework.test.web.servlet.result.MockMvcResultMatchers.status;
 
 import java.util.ArrayList;
@@ -26,16 +24,12 @@ import org.springframework.validation.BindingResult;
 import com.examen.backend.entity.Loan;
 import com.examen.backend.entity.User;
 import com.examen.backend.services.ILoanService;
-import com.fasterxml.jackson.databind.ObjectMapper;
 
 @WebMvcTest(controllers = LoanRestController.class)
 class LoanRestControllerTest {
 
 	@Autowired
 	private MockMvc mockMvc;
-
-	@Autowired
-	private ObjectMapper objectMapper;
 
 	@MockBean
 	private ILoanService loanService;
@@ -57,16 +51,6 @@ class LoanRestControllerTest {
 		this.loanList.add(new Loan(3L,2500.0,new User(1L, "user1@gmail.com", "Name1", "LastName1")));
 	}
 	
-	@DisplayName("Test Find all loans - OK")
-	@Test
-	void TestFindAllUsersOK() throws Exception {
-
-		when(loanService.findAll()).thenReturn(loanList);
-
-		this.mockMvc.perform(get("/loans")).andExpect(status().isOk())
-				.andExpect(jsonPath("$.size()", is(loanList.size())));
-	}
-	
 	@DisplayName("Test Find all loans by Page, Size - OK")
 	@Test
 	void TestFindAllUsersPageSizeOK() throws Exception {
@@ -78,7 +62,7 @@ class LoanRestControllerTest {
 		
 		when(loanService.findAll(PageRequest.of(0, 1))).thenReturn(page);
 
-		this.mockMvc.perform(get("/loans/{page}/{size}", 0, 1)).andExpect(status().isOk());
+		this.mockMvc.perform(get("/loans?page={page}&size={size}",0,1)).andExpect(status().isOk());
 	}
 	
 	@DisplayName("Test Find all loans by Page, Size - BAD_REQUEST")
@@ -92,7 +76,7 @@ class LoanRestControllerTest {
 		
 		when(loanService.findAll(PageRequest.of(0, 1))).thenReturn(page);
 
-		this.mockMvc.perform(get("/loans/{page}/{size}", -10, 1)).andExpect(status().isBadRequest());
+		this.mockMvc.perform(get("/loans?page={page}&size={size}", -10, 1)).andExpect(status().isBadRequest());
 	}
 	
 	@DisplayName("Test Find all loans by Page, Size, User id - OK")
@@ -106,7 +90,7 @@ class LoanRestControllerTest {
 		
 		when(loanService.findAll(PageRequest.of(0, 1),1L)).thenReturn(page);
 
-		this.mockMvc.perform(get("/loans/{page}/{size}/{user_id}", 0, 1,1L)).andExpect(status().isOk());
+		this.mockMvc.perform(get("/loans?page={page}&size={size}&user_id={user_id}", 0, 1,1L)).andExpect(status().isOk());
 	}
 	
 	@DisplayName("Test Find all loans by Page, Size, User id - BAD_REQUEST")
@@ -120,7 +104,7 @@ class LoanRestControllerTest {
 		
 		when(loanService.findAll(PageRequest.of(0, 1),1L)).thenReturn(page);
 
-		this.mockMvc.perform(get("/loans/{page}/{size}/{user_id}", -10, 1,1L)).andExpect(status().isBadRequest());
+		this.mockMvc.perform(get("/loans?page={page}&size={size}&user_id={user_id}", -10, 1,1L)).andExpect(status().isBadRequest());
 	}
 	
 

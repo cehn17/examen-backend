@@ -19,7 +19,4 @@ se encuentra un juego de datos el cual utilice para las pruebas, puede esos dato
 
 - Una vez levantada la aplicación y cargado los datos en la base de datos ya puede realizar pruebas con postman.
 
-- ACLARACIÓN IMPORTANTE: Spring boot no soporta este tipo de rutas: "/loans?page={page}&size={size}&user_id={user_id}" ,
-las rutas deben tener la siguiente estructura: "/loans/{page}/{size}/{user_id}"
-
 - Muchas Gracias!!

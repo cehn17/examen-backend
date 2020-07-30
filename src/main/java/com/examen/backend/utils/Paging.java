@@ -23,7 +23,4 @@ public class Paging {
 	public Integer getTotal() {
 		return total;
 	}
-	
-	
-	
 }

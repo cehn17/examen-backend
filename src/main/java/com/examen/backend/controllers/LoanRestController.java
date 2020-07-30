@@ -13,8 +13,8 @@ import org.springframework.data.domain.PageRequest;
 import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PathVariable;
-//import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.RestController;
 import org.springframework.data.domain.Page;
 
@@ -24,7 +24,7 @@ import com.examen.backend.services.ILoanService;
 import com.examen.backend.utils.Paging;
 
 @RestController
-//@RequestMapping("/api")
+@RequestMapping("/")
 public class LoanRestController {
 	
 	private static final Logger logger = LoggerFactory.getLogger(ExamenBackendApplication.class);
@@ -32,46 +32,24 @@ public class LoanRestController {
 	@Autowired
 	private ILoanService loanService;
 	
+	
 	@GetMapping("/loans")
-	public ResponseEntity<?> findAll(){
-
-		logger.info("INFO - Buscando la lista de Loans en la BBDD");
-		List<Loan> loans = this.loanService.findAll();
-		
-		return new ResponseEntity<>(loans, HttpStatus.OK);
-	}
-	
-//	@GetMapping("/loans?page={page}&size={size}") <-- esta url en spring ya no funciona mas
-	@GetMapping("/loans/{page}/{size}")
-	public ResponseEntity<?> findAll(@PathVariable Integer page, @PathVariable Integer size){
-		logger.info("INFO - Buscando la lista de Loans en la BBDD, Page: " + page + " y Size: " + size);
-		
-		Map<String, Object> response = new HashMap<>();
-		
-		if(page < 0 || size < 0) {
-			logger.error("Error - los parametros ingresados no pueden ser menor a 0");
-			response.put("mensaje", "Error - los parametros ingresados no pueden ser menor a 0");
-			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); 
-		}
-		
-		return this.findAll(this.loanService.findAll(PageRequest.of(page, size)));
-	}
-	
-	
-	@GetMapping("/loans/{page}/{size}/{user_id}")
-	public ResponseEntity<?> findAll(@PathVariable Integer page, @PathVariable Integer size, @PathVariable Long user_id){
+	public ResponseEntity<?> findAll(@RequestParam Integer page, @RequestParam Integer size, @RequestParam(required = false) Long user_id){
 		logger.info("INFO - Buscando la lista de Loans en la BBDD, Page: " + page + ", Size: " + size
 				+" y User id: " + user_id);
 		
 		Map<String, Object> response = new HashMap<>();
 		
-		if(page < 0 || size < 0 || user_id < 0) {
+		if(page < 0 || size < 0 ) {
 			logger.error("Error - los parametros ingresados no pueden ser menor a 0");
 			response.put("mensaje", "Error - los parametros ingresados no pueden ser menor a 0");
 			return new ResponseEntity<>(response, HttpStatus.BAD_REQUEST); 
 		}
 		
-		return this.findAll(this.loanService.findAll(PageRequest.of(page, size),user_id));
+		if(user_id == null)
+			return this.findAll(this.loanService.findAll(PageRequest.of(page, size)));
+		else
+			return this.findAll(this.loanService.findAll(PageRequest.of(page, size),user_id));
 	}
 	
 	private ResponseEntity<?> findAll(Page<Loan> pageMethod){
@@ -82,7 +60,7 @@ public class LoanRestController {
 			pageloans = pageMethod;
 			
 		}catch(DataAccessException e) {
-			logger.error("Error - \"Error al realizar la consulta en la base de datos\"");
+			logger.error("Error - Error al realizar la consulta en la base de datos");
 			logger.error("Error - "+e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
 			response.put("mensaje", "Error al realizar la consulta en la base de datos");
 			response.put("error", e.getMessage().concat(": ").concat(e.getMostSpecificCause().getMessage()));
