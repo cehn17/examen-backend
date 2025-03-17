@@ -20,6 +20,7 @@ import org.springframework.data.domain.Page;
 
 import com.examen.backend.ExamenBackendApplication;
 import com.examen.backend.entity.Loan;
+import com.examen.backend.entity.User;
 import com.examen.backend.services.ILoanService;
 import com.examen.backend.utils.Paging;
 
@@ -31,6 +32,15 @@ public class LoanRestController {
 	
 	@Autowired
 	private ILoanService loanService;
+
+	@GetMapping("/loans/v2")
+	public ResponseEntity<?> findAll(){
+		logger.info("INFO - Buscando la lista de Users en la BBDD");
+		
+		List<Loan> users = this.loanService.findAll();
+		
+		return new ResponseEntity<>(users, HttpStatus.OK);
+	}
 	
 	
 	@GetMapping("/loans")
@@ -47,9 +57,9 @@ public class LoanRestController {
 		}
 		
 		if(user_id == null)
-			return this.findAll(this.loanService.findAll(PageRequest.of(page, size)));
+			return this.findAll(this.loanService.findAll(PageRequest.of(page-1, size)));
 		else
-			return this.findAll(this.loanService.findAll(PageRequest.of(page, size),user_id));
+			return this.findAll(this.loanService.findAll(PageRequest.of(page-1, size),user_id));
 	}
 	
 	private ResponseEntity<?> findAll(Page<Loan> pageMethod){
@@ -68,8 +78,10 @@ public class LoanRestController {
 		}
 		
 		List<Loan> loans = new ArrayList<>();
+		
 		pageloans.getContent().forEach(l -> loans.add(l));
-		Paging paging = new Paging(pageMethod.getNumber(), pageMethod.getSize(), pageloans.getTotalPages());
+		System.out.println("print: " + pageMethod);
+		Paging paging = new Paging(pageMethod.getNumber()+1, pageMethod.getSize(), pageloans.getTotalPages());
 		response.put("items", loans);
 		response.put("paging", paging);
 		

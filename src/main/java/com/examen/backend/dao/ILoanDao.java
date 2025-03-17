@@ -11,5 +11,6 @@ import com.examen.backend.entity.Loan;
 public interface ILoanDao extends JpaRepository<Loan, Long>{
 
 	@Query ("SELECT l FROM Loan l WHERE l.user.id = :user_id") 
-    public Page<Loan> findAllWithUserId ( Pageable pageable,  @Param("user_id") Long user_id);
+    public Page<Loan> findAllWithUserId (Pageable pageable,  @Param("user_id") Long user_id);
+    
 }
