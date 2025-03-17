@@ -5,8 +5,6 @@ import java.util.List;
 import java.util.Map;
 import java.util.stream.Collectors;
 
-import javax.validation.Valid;
-
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +24,8 @@ import org.springframework.web.bind.annotation.RestController;
 import com.examen.backend.ExamenBackendApplication;
 import com.examen.backend.entity.User;
 import com.examen.backend.services.IUserService;
+
+import jakarta.validation.Valid;
 
 @RestController
 @RequestMapping("/")

@@ -31,6 +31,7 @@ class LoanRestControllerTest {
 	@Autowired
 	private MockMvc mockMvc;
 
+	@SuppressWarnings("removal")
 	@MockBean
 	private ILoanService loanService;
 

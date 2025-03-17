@@ -41,6 +41,7 @@ class UserRestControllerTest {
 	@Autowired
 	private ObjectMapper objectMapper;
 
+	@SuppressWarnings("removal")
 	@MockBean
 	private IUserService userService;
 
@@ -93,7 +94,7 @@ class UserRestControllerTest {
 	@Test
 	void TestSaveUserReturn400() throws Exception {
 
-		User user = new User(1L, "test", "Pepe", "Argento");
+		User user = new User(1L, "email", "Pepe", "Argento");
 
 		mockMvc.perform(post("/users", user, result)
 				.param("sendWelcomeMail", "true")
